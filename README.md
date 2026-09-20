@@ -1,25 +1,12 @@
-# Isabeli.fagundes.pereira-Programa.Alimenta-op-Atleta
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle de Alimentação do Atleta</title>
+    <title>AtletaControl</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="topo">
-        <div class="marca">
-            <div class="icone-marca">🏃</div>
-            <div>
-                <h1>AtletaControl</h1>
-                <p>Controle de alimentação e rotina esportiva</p>
-            </div>
-        </div>
-        <button id="btnTema" class="btn btn-tema">
-            🌙 Tema escuro
-        </button>
-    </header>
 
     <main class="container">
         <!-- PERFIL -->
@@ -30,19 +17,19 @@
             </div>
             <div class="grid-perfil">
                 <div class="campo">
-                    <label>Nome</label>
+                    <label for="atletaNome">Nome</label>
                     <input type="text" id="atletaNome" placeholder="Nome do atleta">
                 </div>
                 <div class="campo">
-                    <label>Modalidade</label>
+                    <label for="modalidade">Modalidade</label>
                     <input type="text" id="modalidade" placeholder="Ex.: futebol">
                 </div>
                 <div class="campo">
-                    <label>Equipe / Clube</label>
+                    <label for="equipe">Equipe / Clube</label>
                     <input type="text" id="equipe" placeholder="Nome da equipe">
                 </div>
                 <div class="campo">
-                    <label>Data</label>
+                    <label for="dataRegistro">Data</label>
                     <input type="date" id="dataRegistro">
                 </div>
             </div>
@@ -90,33 +77,33 @@
                 <input type="hidden" id="refeicaoId">
                 <div class="form-grid">
                     <div class="campo">
-                        <label>Tipo de refeição *</label>
+                        <label for="tipoRefeicao">Tipo de refeição *</label>
                         <select id="tipoRefeicao" required>
                             <option value="">Selecione</option>
-                            <option>Café da manhã</option>
-                            <option>Lanche da manhã</option>
-                            <option>Almoço</option>
-                            <option>Lanche da tarde</option>
-                            <option>Jantar</option>
-                            <option>Lanche noturno</option>
-                            <option>Refeição pré-treino</option>
-                            <option>Refeição pós-treino</option>
+                            <option value="Café da manhã">Café da manhã</option>
+                            <option value="Lanche da manhã">Lanche da manhã</option>
+                            <option value="Almoço">Almoço</option>
+                            <option value="Lanche da tarde">Lanche da tarde</option>
+                            <option value="Jantar">Jantar</option>
+                            <option value="Lanche noturno">Lanche noturno</option>
+                            <option value="Refeição pré-treino">Refeição pré-treino</option>
+                            <option value="Refeição pós-treino">Refeição pós-treino</option>
                         </select>
                     </div>
                     <div class="campo">
-                        <label>Horário *</label>
+                        <label for="horario">Horário *</label>
                         <input type="time" id="horario" required>
                     </div>
                     <div class="campo grande">
-                        <label>Alimentos consumidos *</label>
+                        <label for="alimentos">Alimentos consumidos *</label>
                         <input type="text" id="alimentos" placeholder="Ex.: arroz, feijão, legumes..." required>
                     </div>
                     <div class="campo">
-                        <label>Porção / quantidade</label>
-                        <input type="text" id="portcao" placeholder="Ex.: 1 prato">
+                        <label for="porcao">Porção / quantidade</label>
+                        <input type="text" id="porcao" placeholder="Ex.: 1 prato">
                     </div>
                     <div class="campo">
-                        <label>Antes ou depois do treino?</label>
+                        <label for="relacaoTreino">Antes ou depois do treino?</label>
                         <select id="relacaoTreino">
                             <option value="Não informado">Não informado</option>
                             <option value="Antes do treino">Antes do treino</option>
@@ -125,7 +112,7 @@
                         </select>
                     </div>
                     <div class="campo grande">
-                        <label>Observações</label>
+                        <label for="observacoes">Observações</label>
                         <textarea id="observacoes" placeholder="Como se sentiu após a refeição?"></textarea>
                     </div>
                 </div>
@@ -154,18 +141,10 @@
                     </div>
                 </div>
                 <div class="agua-acoes">
-                    <button class="btn btn-agua" data-agua="200">
-                        + 200 ml
-                    </button>
-                    <button class="btn btn-agua" data-agua="300">
-                        + 300 ml
-                    </button>
-                    <button class="btn btn-agua" data-agua="500">
-                        + 500 ml
-                    </button>
-                    <button class="btn btn-secondary" id="btnZerarAgua">
-                        Zerar
-                    </button>
+                    <button type="button" class="btn btn-agua" data-agua="200">+ 200 ml</button>
+                    <button type="button" class="btn btn-agua" data-agua="300">+ 300 ml</button>
+                    <button type="button" class="btn btn-agua" data-agua="500">+ 500 ml</button>
+                    <button type="button" class="btn btn-secondary" id="btnZerarAgua">Zerar</button>
                 </div>
             </div>
         </section>
@@ -178,11 +157,11 @@
             </div>
             <div class="rotina-grid">
                 <div class="campo">
-                    <label>Horas de sono</label>
+                    <label for="sono">Horas de sono</label>
                     <input type="number" id="sono" min="0" max="24" step="0.5" placeholder="Ex.: 8">
                 </div>
                 <div class="campo">
-                    <label>Energia percebida</label>
+                    <label for="energia">Energia percebida</label>
                     <select id="energia">
                         <option value="">Selecione</option>
                         <option value="Muito baixa">Muito baixa</option>
@@ -193,16 +172,16 @@
                     </select>
                 </div>
                 <div class="campo campo-grande">
-                    <label>Observações sobre o dia</label>
+                    <label for="observacaoDia">Observações sobre o dia</label>
                     <textarea id="observacaoDia" placeholder="Ex.: disposição, recuperação, rotina..."></textarea>
                 </div>
             </div>
-            <button id="btnSalvarRotina" class="btn btn-primary">
+            <button type="button" id="btnSalvarRotina" class="btn btn-primary">
                 💾 Salvar rotina
             </button>
         </section>
 
-        <!-- FILTROS -->
+        <!-- FILTROS E HISTÓRICO -->
         <section class="card">
             <div class="cabecalho">
                 <div>
@@ -210,34 +189,28 @@
                     <p>Consulte os registros realizados.</p>
                 </div>
                 <div class="acoes">
-                    <button id="btnExportar" class="btn btn-success">
-                        📥 Exportar CSV
-                    </button>
-                    <button id="btnImprimir" class="btn btn-secondary">
-                        🖨️ Imprimir
-                    </button>
-                    <button id="btnLimpar" class="btn btn-danger">
-                        🗑️ Limpar
-                    </button>
+                    <button type="button" id="btnExportar" class="btn btn-success">📥 Exportar CSV</button>
+                    <button type="button" id="btnImprimir" class="btn btn-secondary">🖨️ Imprimir</button>
+                    <button type="button" id="btnLimpar" class="btn btn-danger">🗑️ Limpar</button>
                 </div>
             </div>
             <div class="filtros">
                 <div class="campo">
-                    <label>Pesquisar</label>
+                    <label for="pesquisa">Pesquisar</label>
                     <input type="search" id="pesquisa" placeholder="🔍 Alimento ou refeição">
                 </div>
                 <div class="campo">
-                    <label>Tipo</label>
+                    <label for="filtroTipo">Tipo</label>
                     <select id="filtroTipo">
                         <option value="todos">Todos</option>
-                        <option>Café da manhã</option>
-                        <option>Lanche da manhã</option>
-                        <option>Almoço</option>
-                        <option>Lanche da tarde</option>
-                        <option>Jantar</option>
-                        <option>Lanche noturno</option>
-                        <option>Refeição pré-treino</option>
-                        <option>Refeição pós-treino</option>
+                        <option value="Café da manhã">Café da manhã</option>
+                        <option value="Lanche da manhã">Lanche da manhã</option>
+                        <option value="Almoço">Almoço</option>
+                        <option value="Lanche da tarde">Lanche da tarde</option>
+                        <option value="Jantar">Jantar</option>
+                        <option value="Lanche noturno">Lanche noturno</option>
+                        <option value="Refeição pré-treino">Refeição pré-treino</option>
+                        <option value="Refeição pós-treino">Refeição pós-treino</option>
                     </select>
                 </div>
             </div>
@@ -268,18 +241,12 @@
     <!-- MODAL -->
     <div id="modal" class="modal" hidden>
         <div class="modal-conteudo">
-            <div class="modal-icone">
-                ⚠️
-            </div>
+            <div class="modal-icone">⚠️</div>
             <h2>Confirmação</h2>
             <p id="modalTexto">Deseja continuar?</p>
             <div class="modal-botoes">
-                <button id="modalCancelar" class="btn btn-secondary">
-                    Cancelar
-                </button>
-                <button id="modalConfirmar" class="btn btn-danger">
-                    Confirmar
-                </button>
+                <button type="button" id="modalCancelar" class="btn btn-secondary">Cancelar</button>
+                <button type="button" id="modalConfirmar" class="btn btn-danger">Confirmar</button>
             </div>
         </div>
     </div>

@@ -1,308 +1,424 @@
-<!DOCTYPE html>  <html lang="pt-BR">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>Controle de Alimentação do Atleta</title>  
-    <link rel="stylesheet" href="style.css">  
-</head>  
-<body>  <!-- TOPO / CABEÇALHO -->  
-<header class="topo">  
-    <div class="marca">  
-        <div class="icone-marca">🏃</div>  
-        <h1>AtletaControl</h1>  
-        <p>Controle de alimentação e rotina esportiva</p>  
-    </div>  
-    <div>  
-        <button id="btnTema" class="btn btn-tema">Tema escuro</button>  
-    </div>  
-</header>  
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle de Alimentação do Atleta</title>
+  <style>
+    :root {
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --text-color: #e0e0e0;
+      --primary-color: #00e676;
+      --secondary-color: #333333;
+      --danger-color: #ff5252;
+      --border-color: #333;
+    }
 
-<main class="container">  
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 20px;
+    }
 
-    <!-- PERFIL DO ATLETA -->  
-    <section class="card">  
-        <div class="titulo">  
-            <h2>👤 Perfil do atleta</h2>  
-        </div>  
-        <p>Informações para organização dos registros.</p>  
-          
-        <div class="grid-perfil">  
-            <div class="campo">  
-                <label>Nome</label>  
-                <div class="atletaNome">  
-                    <input type="text" placeholder="Nome do atleta">  
-                </div>  
-            </div>  
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
 
-            <div class="campo">  
-                <label>Modalidade</label>  
-                <div id="modalidade">  
-                    <input type="text" placeholder="Ex.: Futebol">  
-                </div>  
-            </div>  
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border-color);
+    }
 
-            <div class="campo">  
-                <label>Equipe / Clube</label>  
-                <div id="equipe">  
-                    <input type="text" placeholder="Nome da equipe">  
-                </div>  
-            </div>  
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
 
-            <div class="campo">  
-                <label>Data</label>  
-                <div id="dataRegistro">  
-                    <input type="date">  
-                </div>  
-            </div>  
-        </div>  
-    </section>  
+    .indicador {
+      background-color: var(--card-bg);
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid var(--border-color);
+    }
 
-    <!-- RESUMO / DASHBOARD -->  
-    <section class="dashboard">  
-        <div class="indicador">  
-            <span>🥤</span>  
-            <small>Refeições registradas</small>  
-            <strong id="totalRefeicoes">0</strong>  
-        </div>  
+    .indicador span {
+      font-size: 1.5rem;
+      display: block;
+    }
 
-        <div class="indicador agua">  
-            <span>💧</span>  
-            <small>Água registrada</small>  
-            <strong id="aguaTotal">0 L</strong>  
-        </div>  
+    .indicador strong {
+      font-size: 1.2rem;
+      display: block;
+      margin-top: 5px;
+    }
 
-        <div class="indicador sono">  
-            <span>🌙</span>  
-            <small>Sono</small>  
-            <strong id="sonoTotal">-</strong>  
-        </div>  
+    .grid-perfil, .form-grid, .rotina-grid, .filtros {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
 
-        <div class="indicador energia">  
-            <span>⚡</span>  
-            <small>Energia percebida</small>  
-            <strong id="energiaTotal">-</strong>  
-        </div>  
-    </section>  
+    .campo {
+      display: flex;
+      flex-direction: column;
+    }
 
-    <!-- REGISTRO DE REFEIÇÃO -->  
-    <section class="card">  
-        <div class="titulo">  
-            <h2>🍲 Registrar refeição</h2>  
-        </div>  
-        <p>Registre o que foi consumido e como você se sentiu.</p>  
+    .campo.grande {
+      grid-column: span 2;
+    }
 
-        <form id="formRefeicao">  
-            <input type="hidden" id="refeicaoId">  
+    label {
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+    }
 
-            <div class="form-grid">  
-                <div class="campo">  
-                    <label>Tipo de refeição *</label>  
-                    <select id="tipoRefeicao" required>  
-                        <option value="">Selecione</option>  
-                        <option>Café da manhã</option>  
-                        <option>Lanche da manhã</option>  
-                        <option>Almoço</option>  
-                        <option>Lanche da tarde</option>  
-                        <option>Jantar</option>  
-                        <option>Lanche noturno</option>  
-                        <option>Refeição pré-treino</option>  
-                        <option>Refeição pós-treino</option>  
-                    </select>  
-                </div>  
+    input, select, textarea {
+      padding: 10px;
+      background-color: #2b2b2b;
+      border: 1px solid var(--border-color);
+      color: #fff;
+      border-radius: 4px;
+    }
 
-                <div class="campo">  
-                    <label>Horário *</label>  
-                    <input type="time" id="horario" required>  
-                </div>  
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
 
-                <div class="campo grande">  
-                    <label>Alimentos consumidos *</label>  
-                    <textarea id="alimentos" placeholder="Ex.: arroz, feijão, legumes..." required></textarea>  
-                </div>  
+    .botoes, .agua-acoes, .acoes {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+    }
 
-                <div class="campo">  
-                    <label>Porção / quantidade</label>  
-                    <input type="text" id="porcao" placeholder="Ex.: 1 prato">  
-                </div>  
+    .btn {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-                <div class="campo">  
-                    <label>Antes ou depois do treino?</label>  
-                    <select id="relacaoTreino">  
-                        <option value="Não informado">Não informado</option>  
-                        <option value="Antes do treino">Antes do treino</option>  
-                        <option value="Depois do treino">Depois do treino</option>  
-                        <option value="Sem relação">Sem relação</option>  
-                    </select>  
-                </div>  
+    .btn-primary { background-color: var(--primary-color); color: #000; }
+    .btn-secondary { background-color: var(--secondary-color); color: #fff; }
+    .btn-danger { background-color: var(--danger-color); color: #fff; }
+    .btn-agua { background-color: #0022ff; color: #fff; }
 
-                <div class="campo grande">  
-                    <label>Observações</label>  
-                    <textarea id="observacoes" placeholder="Como se sentiu após a refeição?"></textarea>  
-                </div>  
-            </div>  
+    .tabela-container {
+      overflow-x: auto;
+      margin-top: 15px;
+    }
 
-            <div class="botoes">  
-                <button type="submit" class="btn btn-primary" id="btnSalvar">  
-                    ➕ Registrar refeição  
-                </button>  
-                <button type="button" class="btn btn-secondary" id="btnCancelar" hidden>  
-                    Cancelar  
-                </button>  
-            </div>  
-        </form>  
-    </section>  
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
 
-    <!-- HIDRATAÇÃO -->  
-    <section class="card">  
-        <div class="titulo">  
-            <h2>💧 Controle de hidratação</h2>  
-        </div>  
-        <p>Registre a ingestão de líquidos ao longo do dia.</p>  
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
 
-        <div class="hidratacao">  
-            <div class="agua-contador">  
-                <div class="agua-visual">  
-                    <span>🥛</span>  
-                    <strong id="aguaExibida">0 ml</strong>  
-                </div>  
-            </div>  
+    th {
+      background-color: #252525;
+    }
 
-            <div class="agua-acoes">  
-                <button class="btn btn-agua" data-agua="200">+ 200 ml</button>  
-                <button class="btn btn-agua" data-agua="300">+ 300 ml</button>  
-                <button class="btn btn-agua" data-agua="500">+ 500 ml</button>  
-                <button class="btn btn-secondary" id="btnZerarAgua">Zerar</button>  
-            </div>  
-        </div>  
-    </section>  
+    .sem-registros {
+      text-align: center;
+      padding: 20px;
+      color: #888;
+    }
 
-    <!-- ROTINA DIÁRIA -->  
-    <section class="card">  
-        <div class="titulo">  
-            <h2>🌙 Rotina diária</h2>  
-        </div>  
-        <p>Registre informações subjetivas da rotina.</p>  
+    @media (max-width: 600px) {
+      .campo.grande {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
 
-        <div class="rotina-grid">  
-            <div class="campo">  
-                <label>Horas de sono</label>  
-                <input type="number" id="sono" min="0" max="24" step="0.5" placeholder="Ex.: 8">  
-            </div>  
+  <header>
+    <h1>🏃 AtletaControl</h1>
+    <span>Tema escuro</span>
+  </header>
 
-            <div class="campo">  
-                <label>Energia percebida</label>  
-                <select id="energia">  
-                    <option value="">Selecione</option>  
-                    <option value="Muito baixa">Muito baixa</option>  
-                    <option value="Baixa">Baixa</option>  
-                    <option value="Moderada">Moderada</option>  
-                    <option value="Boa">Boa</option>  
-                    <option value="Muito boa">Muito boa</option>  
-                </select>  
-            </div>  
+  <!-- PERFIL DO ATLETA -->
+  <section class="card">
+    <div class="titulo">
+      <h2>👤 Perfil do atleta</h2>
+    </div>
+    <p>Informações para organização dos registros.</p>
+    <div class="grid-perfil">
+      <div class="campo">
+        <label for="atletaNome">Nome</label>
+        <input type="text" id="atletaNome" placeholder="Nome do atleta">
+      </div>
+      <div class="campo">
+        <label for="modalidade">Modalidade</label>
+        <input type="text" id="modalidade" placeholder="Ex.: Futebol">
+      </div>
+      <div class="campo">
+        <label for="equipe">Equipe / Clube</label>
+        <input type="text" id="equipe" placeholder="Nome da equipe">
+      </div>
+      <div class="campo">
+        <label for="dataRegistro">Data</label>
+        <input type="date" id="dataRegistro">
+      </div>
+    </div>
+  </section>
 
-            <div class="campo grande">  
-                <label>Observações sobre o dia</label>  
-                <textarea id="observacaoDia" placeholder="Ex.: disposição, recuperação, rotina..."></textarea>  
-            </div>  
-        </div>  
+  <!-- RESUMO / DASHBOARD -->
+  <section class="dashboard">
+    <div class="indicador">
+      <span>🥤</span>
+      <small>Refeições registradas</small>
+      <strong id="totalRefeicoes">0</strong>
+    </div>
+    <div class="indicador agua">
+      <span>💧</span>
+      <small>Água registrada</small>
+      <strong id="aguaTotal">0 L</strong>
+    </div>
+    <div class="indicador sono">
+      <span>🌙</span>
+      <small>Sono</small>
+      <strong id="sonoTotal">-</strong>
+    </div>
+    <div class="indicador energia">
+      <span>⚡</span>
+      <small>Energia percebida</small>
+      <strong id="energiaTotal">-</strong>
+    </div>
+  </section>
 
-        <button type="button" class="btn btn-primary" id="btnSalvarRotina">  
-            💾 Salvar rotina  
-        </button>  
-    </section>  
+  <!-- REGISTRO DE REFEIÇÃO -->
+  <section class="card">
+    <div class="titulo">
+      <h2>🍲 Registrar refeição</h2>
+    </div>
+    <p>Registre o que foi consumido e como você se sentiu.</p>
+    <form id="formRefeicao">
+      <input type="hidden" id="refeicaoId">
+      <div class="form-grid">
+        <div class="campo">
+          <label for="tipoRefeicao">Tipo de refeição *</label>
+          <select id="tipoRefeicao" required>
+            <option value="">Selecione</option>
+            <option>Café da manhã</option>
+            <option>Lanche da manhã</option>
+            <option>Almoço</option>
+            <option>Lanche da tarde</option>
+            <option>Jantar</option>
+            <option>Lanche noturno</option>
+            <option>Refeição pré-treino</option>
+            <option>Refeição pós-treino</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="horario">Horário *</label>
+          <input type="time" id="horario" required>
+        </div>
+        <div class="campo grande">
+          <label for="alimentos">Alimentos consumidos *</label>
+          <textarea id="alimentos" placeholder="Ex.: arroz, feijão, legumes..." required></textarea>
+        </div>
+        <div class="campo">
+          <label for="porcao">Porção / quantidade</label>
+          <input type="text" id="porcao" placeholder="Ex.: 1 prato">
+        </div>
+        <div class="campo">
+          <label for="relacaoTreino">Antes ou depois do treino?</label>
+          <select id="relacaoTreino">
+            <option value="Não informado">Não informado</option>
+            <option value="Antes do treino">Antes do treino</option>
+            <option value="Depois do treino">Depois do treino</option>
+            <option value="Sem relação">Sem relação</option>
+          </select>
+        </div>
+        <div class="campo grande">
+          <label for="observacoes">Observações</label>
+          <textarea id="observacoes" placeholder="Como se sentiu após a refeição?"></textarea>
+        </div>
+      </div>
+      <div class="botoes">
+        <button type="submit" class="btn btn-primary" id="btnSalvar">➕ Registrar refeição</button>
+        <button type="button" class="btn btn-secondary" id="btnCancelar" hidden>Cancelar</button>
+      </div>
+    </form>
+  </section>
 
-    <!-- HISTÓRICO E FILTROS -->  
-    <section class="card">  
-        <div class="cabecalho">  
-            <h2>📋 Histórico alimentar</h2>  
-            <div class="acoes">  
-                <button class="btn btn-button" id="btnExportar">📊 Exportar CSV</button>  
-                <button class="btn btn-secondary" id="btnImprimir">🖨️ Imprimir</button>  
-            </div>  
-        </div>  
-        <p>Consulte os registros realizados.</p>  
+  <!-- HIDRATAÇÃO -->
+  <section class="card">
+    <div class="titulo">
+      <h2>💧 Controle de hidratação</h2>
+    </div>
+    <p>Registre a ingestão de líquidos ao longo do dia.</p>
+    <div class="hidratacao">
+      <div class="agua-contador">
+        <div class="agua-visual">
+          <span>🥛</span>
+          <strong id="aguaExibida">0 ml</strong>
+        </div>
+      </div>
+      <div class="agua-acoes">
+        <button class="btn btn-agua" onclick="adicionarAgua(200)">+ 200 ml</button>
+        <button class="btn btn-agua" onclick="adicionarAgua(300)">+ 300 ml</button>
+        <button class="btn btn-agua" onclick="adicionarAgua(500)">+ 500 ml</button>
+        <button class="btn btn-secondary" id="btnZerarAgua" onclick="zerarAgua()">Zerar</button>
+      </div>
+    </div>
+  </section>
 
-        <!-- FILTROS -->  
-        <div class="filtros">  
-            <div class="campo">  
-                <label>Pesquisar</label>  
-                <input type="search" id="pesquisa" placeholder="🔍 Alimento ou refeição">  
-            </div>  
+  <!-- ROTINA DIÁRIA -->
+  <section class="card">
+    <div class="titulo">
+      <h2>🌙 Rotina diária</h2>
+    </div>
+    <p>Registre informações subjetivas da rotina.</p>
+    <div class="rotina-grid">
+      <div class="campo">
+        <label for="sono">Horas de sono</label>
+        <input type="number" id="sono" min="0" max="24" step="0.5" placeholder="Ex.: 8">
+      </div>
+      <div class="campo">
+        <label for="energia">Energia percebida</label>
+        <select id="energia">
+          <option value="">Selecione</option>
+          <option value="Muito baixa">Muito baixa</option>
+          <option value="Baixa">Baixa</option>
+          <option value="Moderada">Moderada</option>
+          <option value="Boa">Boa</option>
+          <option value="Muito boa">Muito boa</option>
+        </select>
+      </div>
+      <div class="campo grande">
+        <label for="observacaoDia">Observações sobre o dia</label>
+        <textarea id="observacaoDia" placeholder="Ex.: disposição, recuperação, rotina..."></textarea>
+      </div>
+    </div>
+    <div class="botoes">
+      <button type="button" class="btn btn-primary" id="btnSalvarRotina" onclick="salvarRotina()">💾 Salvar rotina</button>
+    </div>
+  </section>
 
-            <div class="campo">  
-                <label>Tipo</label>  
-                <select id="filtroTipo">  
-                    <option value="Todos">Todos</option>  
-                    <option>Café da manhã</option>  
-                    <option>Lanche da manhã</option>  
-                    <option>Almoço</option>  
-                    <option>Lanche da tarde</option>  
-                    <option>Jantar</option>  
-                    <option>Lanche noturno</option>  
-                    <option>Refeição pré-treino</option>  
-                    <option>Refeição pós-treino</option>  
-                </select>  
-            </div>  
+  <!-- HISTÓRICO E FILTROS -->
+  <section class="card">
+    <div class="cabecalho">
+      <h2>📋 Histórico alimentar</h2>
+    </div>
+    <p>Consulte os registros realizados.</p>
+    <div class="tabela-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Horário</th>
+            <th>Tipo</th>
+            <th>Alimentos</th>
+            <th>Porção</th>
+            <th>Relação Treino</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaRefeicoes"></tbody>
+      </table>
+    </div>
+    <div class="sem-registros" id="semRegistros">
+      <h3>Nenhuma refeição registrada</h3>
+      <p>Utilize o formulário acima para começar.</p>
+    </div>
+  </section>
 
-            <div>  
-                <button class="btn btn-danger" id="btnLimpar">🗑️ Limpar</button>  
-            </div>  
-        </div>  
+  <script>
+    let consumoAguaMl = 0;
+    let refeicoes = [];
 
-        <!-- TABELA DE REGISTROS -->  
-        <div class="tabela-container">  
-            <table>  
-                <thead>  
-                    <tr>  
-                        <th>Data</th>  
-                        <th>Horário</th>  
-                        <th>Refeição</th>  
-                        <th>Alimentos</th>  
-                        <th>Porção</th>  
-                        <th>Treino</th>  
-                        <th>Ações</th>  
-                    </tr>  
-                </thead>  
-                <tbody id="tabelaRefeicoes">  
-                    <!-- Linhas geradas via JavaScript -->  
-                </tbody>  
-            </table>  
-        </div>  
+    document.getElementById('dataRegistro').valueAsDate = new Date();
 
-        <div class="sem-registros" id="semRegistros">  
-            <h3>Nenhuma refeição registrada</h3>  
-            <p>Utilize o formulário acima para começar.</p>  
-        </div>  
-    </section>  
+    function adicionarAgua(quantidade) {
+      consumoAguaMl += quantidade;
+      atualizarHidratacao();
+    }
 
-</main>  
+    function zerarAgua() {
+      consumoAguaMl = 0;
+      atualizarHidratacao();
+    }
 
-<!-- MODAL DE CONFIRMAÇÃO -->  
-<div id="modal" class="modal" hidden>  
-    <div class="modal-conteudo">  
-        <div class="modal-icone">⚠️</div>  
-        <h2>Confirmação</h2>  
-        <p id="modalTexto">Deseja continuar?</p>  
-        <div class="modal-botoes">  
-            <button class="btn btn-secondary" id="modalCancelar">Cancelar</button>  
-            <button class="btn btn-danger" id="modalConfirmar">Confirmar</button>  
-        </div>  
-    </div>  
-</div>  
+    function atualizarHidratacao() {
+      document.getElementById('aguaExibida').innerText = `${consumoAguaMl} ml`;
+      document.getElementById('aguaTotal').innerText = `${(consumoAguaMl / 1000).toFixed(1)} L`;
+    }
 
-<!-- TOAST (NOTIFICAÇÕES) -->  
-<div id="toast" class="toast">  
-    <span id="toastIcon">✅</span>  
-    <span id="toastTexto">Operação realizada.</span>  
-</div>  
+    function salvarRotina() {
+      const sono = document.getElementById('sono').value;
+      const energia = document.getElementById('energia').value;
 
-<!-- RODAPÉ -->  
-<footer>  
-    <p><strong>AtletaControl</strong> — Sistema de organização alimentar e rotina esportiva.</p>  
-</footer>  
+      document.getElementById('sonoTotal').innerText = sono ? `${sono} h` : '-';
+      document.getElementById('energiaTotal').innerText = energia || '-';
+      alert('Rotina salva com sucesso!');
+    }
 
-<script src="script.js"></script>
+    document.getElementById('formRefeicao').addEventListener('submit', function(e) {
+      e.preventDefault();
 
-</body>  
-</html>  Conseguiu ver se esse código vai roda
+      const tipo = document.getElementById('tipoRefeicao').value;
+      const horario = document.getElementById('horario').value;
+      const alimentos = document.getElementById('alimentos').value;
+      const porcao = document.getElementById('porcao').value || '-';
+      const relacaoTreino = document.getElementById('relacaoTreino').value;
+
+      const novaRefeicao = { tipo, horario, alimentos, porcao, relacaoTreino };
+      refeicoes.push(novaRefeicao);
+
+      document.getElementById('formRefeicao').reset();
+      atualizarTabela();
+    });
+
+    function atualizarTabela() {
+      const tbody = document.getElementById('tabelaRefeicoes');
+      const semRegistros = document.getElementById('semRegistros');
+      tbody.innerHTML = '';
+
+      if (refeicoes.length === 0) {
+        semRegistros.style.display = 'block';
+      } else {
+        semRegistros.style.display = 'none';
+        refeicoes.forEach((ref, index) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${ref.horario}</td>
+            <td>${ref.tipo}</td>
+            <td>${ref.alimentos}</td>
+            <td>${ref.porcao}</td>
+            <td>${ref.relacaoTreino}</td>
+            <td><button class="btn btn-danger" onclick="removerRefeicao(${index})">Excluir</button></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      document.getElementById('totalRefeicoes').innerText = refeicoes.length;
+    }
+
+    function removerRefeicao(index) {
+      refeicoes.splice(index, 1);
+      atualizarTabela();
+    }
+  </script>
+</body>
+</html>
